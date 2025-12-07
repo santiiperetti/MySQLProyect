@@ -49,12 +49,12 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.galaxy (
     galaxy_id integer NOT NULL,
-    name character varying(50),
-    age integer,
-    num_stars integer,
-    diameter_in_light_years numeric(10,2),
-    has_supermassive_blackhole boolean,
-    is_spiral boolean,
+    name character varying(50) NOT NULL,
+    age integer NOT NULL,
+    num_stars integer NOT NULL,
+    diameter_in_light_years numeric(10,2) NOT NULL,
+    has_supermassive_blackhole boolean NOT NULL,
+    is_spiral boolean NOT NULL,
     description text
 );
 
@@ -89,13 +89,13 @@ ALTER SEQUENCE public.galaxy_galaxy_id_seq OWNED BY public.galaxy.galaxy_id;
 
 CREATE TABLE public.moon (
     moon_id integer NOT NULL,
-    name character varying(50),
-    planet_id integer,
-    mass_in_kg numeric(30,2),
-    radius_in_km integer,
-    age integer,
-    has_atmosphere boolean,
-    is_geologically_active boolean
+    name character varying(50) NOT NULL,
+    planet_id integer NOT NULL,
+    mass_in_kg numeric(30,2) NOT NULL,
+    radius_in_km integer NOT NULL,
+    age integer NOT NULL,
+    has_atmosphere boolean NOT NULL,
+    is_geologically_active boolean NOT NULL
 );
 
 
@@ -129,13 +129,13 @@ ALTER SEQUENCE public.moon_moon_id_seq OWNED BY public.moon.moon_id;
 
 CREATE TABLE public.planet (
     planet_id integer NOT NULL,
-    name character varying(50),
-    host_star_id integer,
-    mass_in_kg numeric(30,2),
-    radius_in_km integer,
-    is_habitable boolean,
-    has_rings boolean,
-    age integer
+    name character varying(50) NOT NULL,
+    host_star_id integer NOT NULL,
+    mass_in_kg numeric(30,2) NOT NULL,
+    radius_in_km integer NOT NULL,
+    is_habitable boolean NOT NULL,
+    has_rings boolean NOT NULL,
+    age integer NOT NULL
 );
 
 
@@ -169,13 +169,13 @@ ALTER SEQUENCE public.planet_planet_id_seq OWNED BY public.planet.planet_id;
 
 CREATE TABLE public.star (
     star_id integer NOT NULL,
-    name character varying(50),
-    galaxy_id integer,
-    mass_in_msol numeric(5,2),
-    radius_in_km integer,
-    has_planets boolean,
-    age integer,
-    is_main_sequence boolean
+    name character varying(50) NOT NULL,
+    galaxy_id integer NOT NULL,
+    mass_in_msol numeric(5,2) NOT NULL,
+    radius_in_km integer NOT NULL,
+    has_planets boolean NOT NULL,
+    age integer NOT NULL,
+    is_main_sequence boolean NOT NULL
 );
 
 
@@ -284,11 +284,27 @@ SELECT pg_catalog.setval('public.star_star_id_seq', 1, false);
 
 
 --
+-- Name: galaxy galaxy_name_unique; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.galaxy
+    ADD CONSTRAINT galaxy_name_unique UNIQUE (name);
+
+
+--
 -- Name: galaxy galaxy_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
 ALTER TABLE ONLY public.galaxy
     ADD CONSTRAINT galaxy_pkey PRIMARY KEY (galaxy_id);
+
+
+--
+-- Name: moon moon_name_unique; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.moon
+    ADD CONSTRAINT moon_name_unique UNIQUE (name);
 
 
 --
@@ -300,11 +316,27 @@ ALTER TABLE ONLY public.moon
 
 
 --
+-- Name: planet planet_name_unique; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.planet
+    ADD CONSTRAINT planet_name_unique UNIQUE (name);
+
+
+--
 -- Name: planet planet_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
 ALTER TABLE ONLY public.planet
     ADD CONSTRAINT planet_pkey PRIMARY KEY (planet_id);
+
+
+--
+-- Name: star star_name_unique; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.star
+    ADD CONSTRAINT star_name_unique UNIQUE (name);
 
 
 --
